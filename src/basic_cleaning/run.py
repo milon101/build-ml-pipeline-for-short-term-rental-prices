@@ -77,21 +77,21 @@ if __name__ == "__main__":
     parser.add_argument(
         "--output_description", 
         type=str,
-        help="",
+        help="A short output description",
         required=True
     )
 
     parser.add_argument(
         "--min_price", 
         type=float,
-        help="",
+        help="Minimum price to consider per night",
         required=True
     )
 
     parser.add_argument(
         "--max_price", 
         type=float,
-        help="",
+        help="Maximum price to consider per night",
         required=True
     )
 
