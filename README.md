@@ -1,53 +1,4 @@
 # Build an ML Pipeline for Short-Term Rental Prices in NYC
-You are working for a property management company renting rooms and properties for short periods of 
-time on various rental platforms. You need to estimate the typical price for a given property based 
-on the price of similar properties. Your company receives new data in bulk every week. The model needs 
-to be retrained with the same cadence, necessitating an end-to-end pipeline that can be reused.
-
-In this project you will build such a pipeline.
-
-## Table of contents
-
-- [Introduction](#build-an-ML-Pipeline-for-Short-Term-Rental-Prices-in-NYC)
-- [Preliminary steps](#preliminary-steps)
-  * [Fork the Starter Kit](#fork-the-starter-kit)
-  * [Create environment](#create-environment)
-  * [Get API key for Weights and Biases](#get-api-key-for-weights-and-biases)
-  * [Cookie cutter](#cookie-cutter)
-  * [The configuration](#the-configuration)
-  * [Running the entire pipeline or just a selection of steps](#Running-the-entire-pipeline-or-just-a-selection-of-steps)
-  * [Pre-existing components](#pre-existing-components)
-- [Instructions](#instructions)
-  * [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
-  * [Data cleaning](#data-cleaning)
-  * [Data testing](#data-testing)
-  * [Data splitting](#data-splitting)
-  * [Train Random Forest](#train-random-forest)
-  * [Optimize hyperparameters](#optimize-hyperparameters)
-  * [Select the best model](#select-the-best-model)
-  * [Test](#test)
-  * [Visualize the pipeline](#visualize-the-pipeline)
-  * [Release the pipeline](#release-the-pipeline)
-  * [Train the model on a new data sample](#train-the-model-on-a-new-data-sample)
-- [Cleaning up](#cleaning-up)
-
-## Preliminary steps
-### Fork the Starter kit
-Go to [https://github.com/udacity/build-ml-pipeline-for-short-term-rental-prices.git](https://github.com/udacity/build-ml-pipeline-for-short-term-rental-prices.git)
-and click on `Fork` in the upper right corner. This will create a fork in your Github account, i.e., a copy of the
-repository that is under your control. Now clone the repository locally so you can start working on it:
-
-```
-git clone https://github.com/[your github username]/build-ml-pipeline-for-short-term-rental-prices.git
-```
-
-and go into the repository:
-
-```
-cd build-ml-pipeline-for-short-term-rental-prices
-```
-Commit and push to the repository often while you make progress towards the solution. Remember 
-to add meaningful commit messages.
 
 ### Create environment
 Make sure to have conda installed and ready, then create a new environment using the ``environment.yml``
@@ -58,19 +9,10 @@ file provided in the root of the repository and activate it:
 > conda activate nyc_airbnb_dev
 ```
 
-### Get API key for Weights and Biases
-Let's make sure we are logged in to Weights & Biases. Get your API key from W&B by going to 
-[https://wandb.ai/authorize](https://wandb.ai/authorize) and click on the + icon (copy to clipboard), 
-then paste your key into this command:
+### Public W&B project nyc_airbnb
 
-```bash
-> wandb login [your API key]
-```
+Project link in W&B [https://wandb.ai/milon101/nyc_airbnb/](https://wandb.ai/milon101/nyc_airbnb/)
 
-You should see a message similar to:
-```
-wandb: Appending key for api.wandb.ai to your netrc file: /home/[your username]/.netrc
-```
 
 ### Cookie cutter
 In order to make your job a little easier, you are provided a cookie cutter template that you can use to create 
@@ -121,6 +63,8 @@ the configuration file. It can be accessed from the ``go`` function as
 NOTE: do NOT hardcode any parameter when writing the pipeline. All the parameters should be 
 accessed from the configuration file.
 
+
+
 ### Running the entire pipeline or just a selection of steps
 In order to run the pipeline when you are developing, you need to be in the root of the starter kit, 
 then you can execute as usual:
@@ -151,72 +95,17 @@ modeling -> random_forest -> n_estimators to 10 and etl->min_price to 50:
   -P hydra_options="modeling.random_forest.n_estimators=10 etl.min_price=50"
 ```
 
-### Pre-existing components
-In order to simulate a real-world situation, we are providing you with some pre-implemented
-re-usable components. While you have a copy in your fork, you will be using them from the original
-repository by accessing them through their GitHub link, like:
-
-```python
-_ = mlflow.run(
-                f"{config['main']['components_repository']}/get_data",
-                "main",
-                parameters={
-                    "sample": config["etl"]["sample"],
-                    "artifact_name": "sample.csv",
-                    "artifact_type": "raw_data",
-                    "artifact_description": "Raw file as downloaded"
-                },
-            )
-```
-where `config['main']['components_repository']` is set to 
-[https://github.com/udacity/build-ml-pipeline-for-short-term-rental-prices#components](https://github.com/udacity/build-ml-pipeline-for-short-term-rental-prices/tree/main/components).
-You can see the parameters that they require by looking into their `MLproject` file:
-
-- `get_data`: downloads the data. [MLproject](https://github.com/udacity/build-ml-pipeline-for-short-term-rental-prices/blob/main/components/get_data/MLproject)
-- `train_val_test_split`: segrgate the data (splits the data) [MLproject](https://github.com/udacity/build-ml-pipeline-for-short-term-rental-prices/blob/main/components/train_val_test_split/MLproject)
-
-## In case of errors
-When you make an error writing your `conda.yml` file, you might end up with an environment for the pipeline or one
-of the components that is corrupted. Most of the time `mlflow` realizes that and creates a new one every time you try
-to fix the problem. However, sometimes this does not happen, especially if the problem was in the `pip` dependencies.
-In that case, you might want to clean up all conda environments created by `mlflow` and try again. In order to do so,
-you can get a list of the environments you are about to remove by executing:
-
-```
-> conda info --envs | grep mlflow | cut -f1 -d" "
-```
-
-If you are ok with that list, execute this command to clean them up:
-
-**_NOTE_**: this will remove *ALL* the environments with a name starting with `mlflow`. Use at your own risk
-
-```
-> for e in $(conda info --envs | grep mlflow | cut -f1 -d" "); do conda uninstall --name $e --all -y;done
-```
-
-This will iterate over all the environments created by `mlflow` and remove them.
-
-
 ## Instructions
 
-The pipeline is defined in the ``main.py`` file in the root of the starter kit. The file already
-contains some boilerplate code as well as the download step. Your task will be to develop the
+The pipeline is defined in the ``main.py`` file in the root file. Your task will be to develop the
 needed additional step, and then add them to the ``main.py`` file.
 
-__*NOTE*__: the modeling in this exercise should be considered a baseline. We kept the data cleaning and the modeling 
-simple because we want to focus on the MLops aspect of the analysis. It is possible with a little more effort to get
-a significantly-better model for this dataset.
 
 ### Exploratory Data Analysis (EDA)
 The scope of this section is to get an idea of how the process of an EDA works in the context of
-pipelines, during the data exploration phase. In a real scenario you would spend a lot more time
-in this phase, but here we are going to do the bare minimum.
+pipelines, during the data exploration phase.
 
-NOTE: remember to add some markdown cells explaining what you are about to do, so that the
-notebook can be understood by other people like your colleagues
-
-1. The ``main.py`` script already comes with the download step implemented. Run the pipeline to 
-   get a sample of the data. The pipeline will also upload it to Weights & Biases:
+1. The ``main.py`` script comes with the download step implemented. Run the pipeline to get a sample of the data. The pipeline will also upload it to Weights & Biases:
    
   ```bash
   > mlflow run . -P steps=download
@@ -234,8 +123,8 @@ notebook can be understood by other people like your colleagues
    > mlflow run src/eda
    ```
    This will install Jupyter and all the dependencies for `pandas-profiling`, and open a Jupyter notebook instance.
-   Click on New -> Python 3 and create a new notebook. Rename it `EDA` by clicking on `Untitled` at the top, beside the
-   Jupyter logo.
+   There is notebook called EDA is available in there.
+   
 3. Within the notebook, fetch the artifact we just created (``sample.csv``) from W&B and read 
    it with pandas:
     
@@ -288,7 +177,7 @@ Now we transfer the data processing we have done as part of the EDA to a new ``b
 step that starts from the ``sample.csv`` artifact and create a new artifact ``clean_sample.csv`` 
 with the cleaned data:
 
-1. Make sure you are in the root directory of the starter kit, then create a stub 
+1. Make sure you are in the root directory, then create a stub 
    for the new step. The new step should accept the parameters ``input_artifact`` 
    (the input artifact), ``output_artifact`` (the name for the output artifact), 
    ``output_type`` (the type for the output artifact), ``output_description`` 
@@ -333,17 +222,6 @@ with the cleaned data:
     )
     artifact.add_file("clean_sample.csv")
     run.log_artifact(artifact)
-   ```
-   
-   **_REMEMBER__**: Whenever you are using a library (like pandas), you MUST add it as 
-                    dependency in the ``conda.yml`` file. For example, here we are using pandas 
-                    so we must add it to ``conda.yml`` file, including a version:
-   ```yaml
-   dependencies:
-     - pip=20.3.3
-     - pandas=1.2.3
-     - pip:
-         - wandb==0.10.31
    ```
    
 4. Add the ``basic_cleaning`` step to the pipeline (the ``main.py`` file):
